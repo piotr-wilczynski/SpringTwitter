@@ -1,16 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Hello Twitter</title>
-	</head>
-	<body>
-		<!--
-                <h3>Hello, <span th:text="${twitterProfile.name}">Some User</span>!</h3>
-                -->
-		<h4>These are your tweets:</h4>
-		
-		<ul>
-			<li th:each="tweet:${tweets}" th:text="${tweet.text}">Friend</li>
-		</ul>
-	</body>
+    <head>
+        <title>Hello Twitter</title>
+    </head>
+    <body>
+        <!--
+        <h3>Hello, <span th:text="${twitterProfile.name}">Some User</span>!</h3>
+        <c:forEach var="marksList" items="${personDTO.marksList}" varStatus="status">
+        -->
+        <datalist id="channels">
+            <option th:each="channel:${channels}" th:value="${channel}"></option>
+        </datalist>
+        <form action="/twitter/show" method="get">            
+            <input type="text" name="channel" list="channels"/>
+            <input type="submit"/>
+        </form>
+        <h4>These are your tweets:</h4>
+
+        <ul>
+            <li th:each="tweet:${tweets}" th:text="${tweet.text}" >Friend</li>
+        </ul>
+    </body>
 </html>
