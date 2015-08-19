@@ -11,14 +11,18 @@
         <datalist id="channels">
             <option th:each="channel:${channels}" th:value="${channel}"></option>
         </datalist>
-        <form action="/twitter/show" method="get">            
-            <input type="text" name="channel" list="channels"/>
-            <input type="submit"/>
+        <datalist id="keywords">
+            <option th:each="keyword:${keywords}" th:value="${keyword}"></option>
+        </datalist>
+        <form action="/twitter/show" method="post">            
+            <input type="text" name="channel" list="channels" placeholder="Channel to show..."/>
+            <input type="text" name="keyword" list="keywords" placeholder="Keyword to find..."/>
+            <input type="submit" value="Search"/>
         </form>
         <h4>These are your tweets:</h4>
-
-        <ul>
-            <li th:each="tweet:${tweets}" th:text="${tweet.text}" >Friend</li>
-        </ul>
+        <div th:each="tweet:${tweets}"> 
+            <img th:src="${tweet.profileImageUrl}" />
+            <td th:text="${tweet.text}">Text</td>
+        </div>
     </body>
 </html>
