@@ -15,8 +15,8 @@
             <option th:each="keyword:${keywords}" th:value="${keyword}"></option>
         </datalist>
         <form action="/twitter/show" method="post">            
-            <input type="text" name="channel" list="channels" placeholder="Channel to show..."/>
-            <input type="text" name="keyword" list="keywords" placeholder="Keyword to find..."/>
+            <input type="text" name="channel" th:value="${channel}" list="channels" placeholder="Channel to show..."/>
+            <input type="text" name="keyword" th:value="${keyword}" list="keywords" placeholder="Keyword to find..."/>
             <input type="submit" value="Search"/>
         </form>
         <h4>These are your tweets:</h4>

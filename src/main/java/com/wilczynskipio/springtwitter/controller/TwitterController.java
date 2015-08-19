@@ -58,12 +58,22 @@ public class TwitterController {
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
         List<Tweet> list = getUserTwitter(channel, appToken);
+        if(keyword!=null && keyword.length()>0){
+            for(int i=0;i<list.size();i++){
+                if(!list.get(i).getText().contains(keyword)){
+                    list.remove(i);
+                    i--;
+                }
+            }
+        }
         String[] channels = new String[]{};
         String[] keywords = new String[]{};
         ModelAndView model = new ModelAndView("tweets");
         model.addObject("tweets", list);
         model.addObject("channels", channels);
         model.addObject("keywords", keywords);
+        model.addObject("channel",channel);
+        model.addObject("keyword",keyword);
         return model;
     }
 
