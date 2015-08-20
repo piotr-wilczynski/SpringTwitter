@@ -30,52 +30,38 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class TwitterController {
 
-    @Autowired
-    private Environment env;
-
     @Value("${spring.social.twitter.appId}")
     private String appId;
     @Value("${spring.social.twitter.appSecret}")
     private String appSecret;
 
-    private String appToken;
-
-    
-
-    public TwitterController() {
-        appToken = fetchApplicationAccessToken();
-    }
-
-    
-    
     @RequestMapping(value = "/")
     public String index(Model model) {
         model.addAttribute("name", "Piotr");
-        return "/twitter/show";
+        return "redirect:/twitter/show";
     }
 
     @RequestMapping(value = "/twitter/show")
-    public ModelAndView index(
+    public ModelAndView show(
             @RequestParam(value = "channel", required = false, defaultValue = "twitter") String channel,
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
-        List<Tweet> list = getUserTwitter(channel, appToken);
-        if(keyword!=null && keyword.length()>0){
-            for(int i=0;i<list.size();i++){
-                if(!list.get(i).getText().contains(keyword)){
-                    list.remove(i);
-                    i--;
+        List<Tweet> list = getUserTwitter(channel, fetchApplicationAccessToken());
+        if (keyword != null) {
+            if (keyword.length() > 0) {
+                //remove all tweets without keyword
+                for (int i = 0; i < list.size(); i++) {
+                    if (!list.get(i).getText().contains(keyword)) {
+                        list.remove(i);
+                        i--;
+                    }
                 }
             }
         }
-        String[] channels = new String[]{};
-        String[] keywords = new String[]{};
         ModelAndView model = new ModelAndView("tweets");
         model.addObject("tweets", list);
-        model.addObject("channels", channels);
-        model.addObject("keywords", keywords);
-        model.addObject("channel",channel);
-        model.addObject("keyword",keyword);
+        model.addObject("channel", channel);
+        model.addObject("keyword", keyword);
         return model;
     }
 
@@ -88,7 +74,7 @@ public class TwitterController {
     private static List<Tweet> getUserTwitter(String userName, String appToken) {
         Twitter twitter = new TwitterTemplate(appToken);
         List<org.springframework.social.twitter.api.Tweet> list = twitter.timelineOperations().getUserTimeline(userName, 200);
-        
+
         if (list == null) {
             return new ArrayList<>();
         } else {
@@ -97,11 +83,10 @@ public class TwitterController {
     }
 
     private String fetchApplicationAccessToken() {
-        return fetchApplicationAccessToken("RNFlQKDIyE4xco7bSxPkGlboL", "MyH6VJLqRWoOOEDsHSQpPeOt4jt0cXKnU3lT6JSR81ddyXaaSA");
-        //return fetchApplicationAccessToken(env.getProperty("spring.social.twitter.appId"), env.getProperty("spring.social.twitter.appSecret"));
+        return fetchApplicationAccessToken(appId, appSecret);
     }
 
-    private static String fetchApplicationAccessToken(String appId, String appSecret) {
+    private String fetchApplicationAccessToken(String appId, String appSecret) {
         // Twitter supports OAuth2 *only* for obtaining an application token, not for user tokens.
         OAuth2Operations oauth = new OAuth2Template(appId, appSecret, "", "https://api.twitter.com/oauth2/token");
         return oauth.authenticateClient().getAccessToken();

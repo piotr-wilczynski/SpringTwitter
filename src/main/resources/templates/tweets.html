@@ -12,18 +12,12 @@
         <title>Hello Twitter</title>
     </head>
     <body>
-        <datalist id="channels">
-            <option th:each="channel:${channels}" th:value="${channel}"></option>
-        </datalist>
-        <datalist id="keywords">
-            <option th:each="keyword:${keywords}" th:value="${keyword}"></option>
-        </datalist>
         <div class="container">
             <br/>
             <div class="row">
                 <form class="form-inline" action="/twitter/show" method="post">
-                    <input type="text" class="col-md-5 btn-lg" name="channel" th:value="${channel}" list="channels" placeholder="Channel to show..."/>
-                    <input type="text" class="col-md-5 btn-lg" name="keyword" th:value="${keyword}" list="keywords" placeholder="Keyword to find..."/>
+                    <input type="text" class="col-md-5 btn-lg" name="channel" th:value="${channel}" placeholder="Channel to show..."/>
+                    <input type="text" class="col-md-5 btn-lg" name="keyword" th:value="${keyword}" placeholder="Keyword to find..."/>
                     <button class="btn btn-info col-md-2 btn-lg" type="submit">
                         <i class="glyphicon glyphicon-search"></i>
                     </button>
