@@ -1,28 +1,42 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
+
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" />
+
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
         <title>Hello Twitter</title>
     </head>
     <body>
-        <!--
-        <h3>Hello, <span th:text="${twitterProfile.name}">Some User</span>!</h3>
-        <c:forEach var="marksList" items="${personDTO.marksList}" varStatus="status">
-        -->
         <datalist id="channels">
             <option th:each="channel:${channels}" th:value="${channel}"></option>
         </datalist>
         <datalist id="keywords">
             <option th:each="keyword:${keywords}" th:value="${keyword}"></option>
         </datalist>
-        <form action="/twitter/show" method="post">            
-            <input type="text" name="channel" th:value="${channel}" list="channels" placeholder="Channel to show..."/>
-            <input type="text" name="keyword" th:value="${keyword}" list="keywords" placeholder="Keyword to find..."/>
-            <input type="submit" value="Search"/>
-        </form>
-        <h4>These are your tweets:</h4>
-        <div th:each="tweet:${tweets}"> 
-            <img th:src="${tweet.profileImageUrl}" />
-            <td th:text="${tweet.text}">Text</td>
+        <div class="container">
+            <br/>
+            <div class="row">
+                <form class="form-inline" action="/twitter/show" method="post">
+                    <input type="text" class="col-md-5 btn-lg" name="channel" th:value="${channel}" list="channels" placeholder="Channel to show..."/>
+                    <input type="text" class="col-md-5 btn-lg" name="keyword" th:value="${keyword}" list="keywords" placeholder="Keyword to find..."/>
+                    <button class="btn btn-info col-md-2 btn-lg" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </form>
+            </div>
+            <br/>
+            <div class="row">
+                <div th:each="tweet:${tweets}"> 
+                    <img th:src="${tweet.profileImageUrl}" class="img-circle"/>
+                    <td th:text="${tweet.text}">Text</td>
+                </div>
+            </div>
+            <br/>
         </div>
     </body>
 </html>

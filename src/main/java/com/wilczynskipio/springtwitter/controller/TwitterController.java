@@ -46,10 +46,12 @@ public class TwitterController {
         appToken = fetchApplicationAccessToken();
     }
 
-    @RequestMapping(value = "/twitter")
+    
+    
+    @RequestMapping(value = "/")
     public String index(Model model) {
         model.addAttribute("name", "Piotr");
-        return "twitter";
+        return "/twitter/show";
     }
 
     @RequestMapping(value = "/twitter/show")
