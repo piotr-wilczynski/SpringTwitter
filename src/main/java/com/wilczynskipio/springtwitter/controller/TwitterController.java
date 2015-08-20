@@ -28,7 +28,7 @@ public class TwitterController {
     @Value("${spring.social.twitter.appSecret}")
     private String appSecret;
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/*")
     public String index(Model model) {
         model.addAttribute("name", "Piotr");
         return "redirect:/twitter/show";
@@ -36,32 +36,32 @@ public class TwitterController {
 
     @RequestMapping(value = "/twitter/show")
     public ModelAndView show(
-            @RequestParam(value = "channel", required = false, defaultValue = "twitter") String channel,
+            @RequestParam(value = "channel", required = false, defaultValue = "") String channel,
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 
-        List<Tweet> list = getUserTwitter(channel, fetchApplicationAccessToken());
-        if (keyword != null) {
-            if (keyword.length() > 0) {
-                //remove all tweets without keyword
-                for (int i = 0; i < list.size(); i++) {
-                    if (!list.get(i).getText().contains(keyword)) {
-                        list.remove(i);
-                        i--;
-                    }
+        List<Tweet> list;
+        if (channel.length() > 0) {
+            list = getUserTwitter(channel, fetchApplicationAccessToken());
+
+        } else {
+            list = new ArrayList<>();
+
+        }
+        if (keyword.length() > 0) {
+            //remove all tweets without keyword
+            for (int i = 0; i < list.size(); i++) {
+                if (!list.get(i).getText().toLowerCase().contains(keyword.toLowerCase())) {
+                    list.remove(i);
+                    i--;
                 }
             }
         }
+
         ModelAndView model = new ModelAndView("tweets");
         model.addObject("tweets", list);
         model.addObject("channel", channel);
         model.addObject("keyword", keyword);
         return model;
-    }
-
-    private static List<Tweet> searchTwitter(String query, String appToken) {
-        Twitter twitter = new TwitterTemplate(appToken);
-        SearchResults results = twitter.searchOperations().search(query);
-        return results.getTweets();
     }
 
     private static List<Tweet> getUserTwitter(String userName, String appToken) {
