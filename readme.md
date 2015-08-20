@@ -7,14 +7,14 @@
 ##Run
 To run this project there are two wys:
 
-**1. Using Spring Boot.** 
+**1. Using Apache Tomcat server.** Copy file into webapps folder to deploy application to Apatche Tomcat.
+```command
+    copy java -jar target/SpringTwitter-1.0-SNAPSHOT.war into webapps folder of Apache Tomcat server
+```
+**2. Using Spring Boot.** 
 This command will create server end deploy application on port *8443* which can be changed in the *application.properties* file
 ```java
     java -jar target/SpringTwitter-1.0-SNAPSHOT.war
-```
-**2. Using Apache Tomcat server.**
-```command
-    copy java -jar target/SpringTwitter-1.0-SNAPSHOT.war into webapps folder of Apache Tomcat server
 ```
 ##List of tools
 1. [Bootstrap](http://getbootstrap.com/) - Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
