@@ -5,9 +5,9 @@
     mvn package
 ```
 ##Run
-To run this project there are two wys:
+To run this project there are two ways:
 
-**1. Using Apache Tomcat server.** Copy file into webapps folder of Apache Tomcat server to deploy application to Apatche Tomcat.
+**1. Using Apache Tomcat server.** Copy file into webapps folder of Apache Tomcat server to deploy application to Apache Tomcat.
 ```command
     copy target/SpringTwitter-1.0-SNAPSHOT.war apache-tomcat/webapps
 ```
