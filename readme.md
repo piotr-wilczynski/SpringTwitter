@@ -1,5 +1,6 @@
 
 ##Build
+Use Apache Maven in the main folder with pom.xml file.
 
 ```maven
     mvn package
