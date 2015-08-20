@@ -6,13 +6,13 @@
               th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
               rel="stylesheet" media="screen" />
 
-        <title>Hello Twitter</title>
+        <title>Spring Twitter</title>
     </head>
     <body>
         <div class="container">
             <br/>
             <div class="row">
-                <form class="form-inline" action="/twitter/show" method="post">
+                <form class="form-inline" th:action="@{/twitter/show}" method="post">
                     <input type="text" class="col-md-5 btn-lg" name="channel" th:value="${channel}" placeholder="Channel to show..."/>
                     <input type="text" class="col-md-5 btn-lg" name="keyword" th:value="${keyword}" placeholder="Keyword to find..."/>
                     <button class="btn btn-info col-md-2 btn-lg" type="submit">
